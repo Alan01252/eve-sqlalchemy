@@ -395,25 +395,25 @@ class TestPost(eve_post_tests.TestPost, TestBase):
         r, status = self.post(self.known_resource_url, data=data)
         self.assert201(status)
 
-    def test_post_propertyschema_dict(self):
+    def test_post_keyschema_dict(self):
         # Eve test manipulates schema and removes required constraint on 'ref'.
         # We decided to include 'ref' as it is not easy to manipulate
         # nullable-constraints during runtime.
 
-        data = {'propertyschema_dict': {'aaa': 1},
-                'ref': 'test_post_propertyschema1'}
+        data = {'keyschema_dict': {'aaa': 1},
+                'ref': 'test_post_keyschema1'}
         r, status = self.post(self.known_resource_url, data=data)
         self.assert201(status)
 
-        data = {'propertyschema_dict': {'AAA': '1'},
-                'ref': 'test_post_propertyschema2'}
+        data = {'keyschema_dict': {'AAA': '1'},
+                'ref': 'test_post_keyschema2'}
         r, status = self.post(self.known_resource_url, data=data)
         self.assertValidationErrorStatus(status)
 
         issues = r[ISSUES]
-        self.assertTrue('propertyschema_dict' in issues)
-        self.assertEqual(issues['propertyschema_dict'],
-                         'propertyschema_dict')
+        self.assertTrue('keyschema_dict' in issues)
+        self.assertEqual(issues['keyschema_dict'],
+                         'keyschema_dict')
 
     def test_post_nested(self):
         # Eve test manipulates schema and removes required constraint on 'ref'.

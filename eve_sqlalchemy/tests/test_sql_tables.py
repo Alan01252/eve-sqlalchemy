@@ -71,7 +71,7 @@ class Contacts(CommonColumns):
     read_only_field = Column(String(25), default='default')
     # dict_with_read_only
     key1 = Column(String(25))
-    propertyschema_dict = Column(PickleType)
+    keyschema_dict = Column(PickleType)
     valueschema_dict = Column(PickleType)
     aninteger = Column(Integer)
     afloat = Column(Float)

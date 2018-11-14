@@ -84,9 +84,9 @@ DOMAIN['contacts']['schema']['dependency_field3'].update({
 DOMAIN['contacts']['schema']['read_only_field'].update({
     'readonly': True
 })
-DOMAIN['contacts']['schema']['propertyschema_dict'].update({
+DOMAIN['contacts']['schema']['keyschema_dict'].update({
     'type': 'dict',
-    'propertyschema': {'type': 'string', 'regex': '[a-z]+'}
+    'keyschema': {'type': 'string', 'regex': '[a-z]+'}
 })
 DOMAIN['contacts']['schema']['valueschema_dict'].update({
     'type': 'dict',
