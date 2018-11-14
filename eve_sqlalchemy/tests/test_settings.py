@@ -123,6 +123,18 @@ users_overseas['url'] = 'users/overseas'
 users_overseas['datasource'] = {'source': 'Contacts'}
 DOMAIN['users_overseas'] = users_overseas
 
+contacts_hide_born = copy.deepcopy(DOMAIN['contacts'])
+contacts_hide_born["url"] = "contacts/hide_born"
+contacts_hide_born["source"] = "contacts"
+contacts_hide_born["projection"] = {"born": 0}
+DOMAIN["contacts_hide_born"] =  contacts_hide_born
+
+contacts_hide_media = copy.deepcopy(DOMAIN['contacts'])
+contacts_hide_media["url"] = "contacts/hide_media"
+contacts_hide_media["source"] = "contacts"
+contacts_hide_media["projection"] = {"born": 0}
+DOMAIN["contacts_hide_media"] =  contacts_hide_media
+
 required_invoices = copy.deepcopy(DOMAIN['invoices'])
 required_invoices['schema']['person'].update({
     'required': True

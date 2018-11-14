@@ -50,6 +50,7 @@ class ValidatorSQL(Validator):
         return self.validate(document)
 
     def _validate_unique(self, unique, field, value):
+        """ {'type': 'boolean'} """
         if unique:
             id_field = config.DOMAIN[self.resource]['id_field']
             if field == id_field and value == self._id:
@@ -62,6 +63,13 @@ class ValidatorSQL(Validator):
                 self._error(field, "value '%s' is not unique" % value)
 
     def _validate_data_relation(self, data_relation, field, value):
+        """ {'type': 'dict',
+             'schema': {
+                'resource': {'type': 'string', 'required': True},
+                'field': {'type': 'string', 'required': True},
+                'embeddable': {'type': 'boolean', 'default': False},
+                'version': {'type': 'boolean', 'default': False}
+             }} """
         if 'version' in data_relation and data_relation['version'] is True:
             value_field = data_relation['field']
             version_field = app.config['VERSION']
@@ -119,6 +127,7 @@ class ValidatorSQL(Validator):
         pass
 
     def _validate_readonly(self, read_only, field, value):
+        """ {'type': 'boolean'} """
         # Copied from eve/io/mongo/validation.py.
         original_value = self._original_document.get(field) \
             if self._original_document else None
@@ -128,6 +137,7 @@ class ValidatorSQL(Validator):
 
     def _validate_dependencies(self, document, dependencies, field,
                                break_on_error=False):
+        """ {'type': ['dict', 'hashable', 'list']} """
         # Copied from eve/io/mongo/validation.py, with slight modifications.
 
         if dependencies is None:
@@ -165,10 +175,10 @@ class ValidatorSQL(Validator):
         return super(ValidatorSQL, self)._validate_dependencies(
             dcopy or document, dependencies, field, break_on_error)
 
-    def _error(self, field, _error):
+    # def _error(self, field, _error):
         # Copied from eve/io/mongo/validation.py.
-        super(ValidatorSQL, self)._error(field, _error)
-        if config.VALIDATION_ERROR_AS_LIST:
-            err = self._errors[field]
-            if not isinstance(err, list):
-                self._errors[field] = [err]
+    #    super(ValidatorSQL, self)._error(field, _error)
+    #    if config.VALIDATION_ERROR_AS_LIST:
+    #        err = self._errors[field]
+    #        if not isinstance(err, list):
+    #            self._errors[field] = [err]
