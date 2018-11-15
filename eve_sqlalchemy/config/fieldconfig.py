@@ -30,6 +30,7 @@ class FieldConfig(object):
             types.Integer: 'integer',
             types.JSON: 'json',
             types.PickleType: None,
+            types.Numeric: 'decimal',
         }
         for sqla_type, field_type in sqla_type_mapping.items():
             if isinstance(sqla_column.type, sqla_type):

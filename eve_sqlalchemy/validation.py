@@ -42,7 +42,7 @@ class ValidatorSQL(Validator):
     def validate_update(self, document, _id, original_document=None):
         self._id = _id
         self._original_document = original_document
-        return super(ValidatorSQL, self).validate_update(document)
+        return super(ValidatorSQL, self).validate(document, update=True)
 
     def validate_replace(self, document, _id, original_document=None):
         self._id = _id
@@ -70,6 +70,10 @@ class ValidatorSQL(Validator):
                 'embeddable': {'type': 'boolean', 'default': False},
                 'version': {'type': 'boolean', 'default': False}
              }} """
+
+        if not value and self.schema[field].get("nullable"):
+            return
+
         if 'version' in data_relation and data_relation['version'] is True:
             value_field = data_relation['field']
             version_field = app.config['VERSION']
@@ -126,6 +130,12 @@ class ValidatorSQL(Validator):
         """
         pass
 
+    # TODO Discuss if this is correct functionality?
+    def _validate_type_decimal(self, value):
+        if isinstance(value, int) or isinstance(value, float):
+            return True
+        value.isdecimal()
+
     def _validate_readonly(self, read_only, field, value):
         """ {'type': 'boolean'} """
         # Copied from eve/io/mongo/validation.py.
@@ -174,6 +184,9 @@ class ValidatorSQL(Validator):
             remove_none_values(dcopy)
         return super(ValidatorSQL, self)._validate_dependencies(
             dcopy or document, dependencies, field, break_on_error)
+
+    def _validate_local_id_field(self, local_id, field, value):
+        pass
 
     # def _error(self, field, _error):
         # Copied from eve/io/mongo/validation.py.

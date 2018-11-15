@@ -130,7 +130,15 @@ class SQL(DataLayer):
             args['page'] = req.page
         return SQLAResultCollection(query, fields, **args)
 
-    def find_one(self, resource, req, **lookup):
+    #TODO What are these extra fields are meant to do
+    def find_one(
+        self, 
+        resource, 
+        req, 
+        check_auth_value=True, 
+        force_auth_field_projection=False, 
+        **lookup
+    ):
         client_projection = self._client_projection(req)
         client_embedded = self._client_embedded(req)
         model, filter_, fields, _ = \

@@ -169,6 +169,18 @@ class TestPut(eve_put_tests.TestPut, TestBase):
         else:
             return [r[field] for field in fields]
 
+    def test_ifmatch_bad_etag(self):
+        r, status = self.put(
+            self.item_id_url,
+            data={"key1": "value1"},
+            headers=[("If-Match", "not-quite-right")],
+        )
+        print r
+        print status
+        self.assert412(status)
+
+
+
 
 class TestEvents(eve_put_tests.TestEvents, TestBase):
 

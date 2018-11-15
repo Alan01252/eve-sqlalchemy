@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import hashlib
 
 from sqlalchemy import (
-    Boolean, Column, DateTime, Float, ForeignKey, Integer, LargeBinary,
+    Boolean, Column, DateTime, Float, ForeignKey, Integer, LargeBinary, Numeric,
     PickleType, String, Table, func,
 )
 from sqlalchemy.ext.declarative import declarative_base
@@ -85,6 +85,7 @@ class Invoices(CommonColumns):
     __tablename__ = 'invoices'
     _id = Column(Integer, primary_key=True)
     inv_number = Column(String(25))
+    decimal_number = Column(Numeric)
     person_id = Column(Integer, ForeignKey('contacts._id'))
     person = relationship(Contacts)
     invoicing_contacts = relationship('Contacts', secondary=InvoicingContacts)

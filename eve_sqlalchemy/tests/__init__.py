@@ -79,7 +79,9 @@ class TestMinimal(eve.tests.TestMinimal):
         for k, v in matches.items():
             self.assertTrue(k in issues)
             if isinstance(issues[k], collections.Sequence):
-                self.assertTrue(v in issues[k])
+                for issue in issues[k]:
+                    if(v in issue):
+                        return True
             if isinstance(issues[k], collections.Mapping):
                 self.assertTrue(v in issues[k].values())
 
